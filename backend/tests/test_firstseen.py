@@ -114,3 +114,50 @@ def test_replay_refuses_unknown_uploads(tmp_path):
     client = client_with(tmp_path, lens_url_params(URL), VIRAL)
     with pytest.raises(CheckError):
         check(client, image=b"some other image")
+
+
+def test_fact_checks_come_from_copies_and_similar_images(tmp_path):
+    exact = lens_response(["2 Dec 2015", "2 Dec 2015", "3 Dec 2015"])
+    exact["exact_matches"].append({"title": "Old photo passed off as Ahmedabad", "link": "https://factly.in/x/",
+                                   "date": "5 Dec 2023"})
+    similar = {"visual_matches": [
+        {"title": "Hoax photo of planes floating at flooded airport", "link": "https://news.example/hoax"},
+        {"title": "Airport travel tips", "link": "https://travel.example/tips"},
+    ]}
+    cache = ResponseCache(tmp_path / "c.sqlite")
+    cache.put(lens_url_params(URL), exact)
+    cache.put(lens_url_params(URL, "visual_matches"), similar)
+    client = SerpClient(mode="replay", db_path=tmp_path / "c.sqlite", fixtures_dir=tmp_path / "none")
+    report, _ = check(client, image_url=URL)
+    assert [(f.publisher, f.found_in) for f in report.fact_checks] == [("Factly", "copies"), ("news.example", "similar")]
+    assert "Already fact-checked by Factly, and called out by 1 other outlet." in report.verdict.detail
+    assert report.reply.en.startswith("ℹ️ About this photo:") and "Factly" in report.reply.hi
+
+
+def test_news_must_match_the_claim_not_just_the_city():
+    from firstseen.factcheck import relevant
+    kw = "Ahmedabad airport flooded heavy rain"
+    assert relevant("Ahmedabad airport flooded after heavy rain", kw)
+    assert not relevant("Frequency of 90 flights from Ahmedabad to increase", kw)
+
+
+def test_contexts_find_storms_places_and_scripts():
+    from firstseen.contexts import contexts, script_of
+    titles = [(2011, "Shark swims down Puerto Rico street after Hurricane Irene"),
+              (2011, "Hurricane Irene: shark in Puerto Rico?"),
+              (2017, "Shark on Houston highway during Hurricane Harvey"),
+              (2017, "Hurricane Harvey: Houston shark photo is fake")]
+    labels = [(c["label"], c["first_year"]) for c in contexts(titles)]
+    assert ("Hurricane Irene", 2011) in labels and ("Puerto Rico", 2011) in labels
+    assert ("Hurricane Harvey", 2017) in labels and ("Houston", 2017) in labels
+    assert script_of("2015-ஆம் ஆண்டில் நம்மையெல்லாம்") == "Tamil"
+    assert script_of("रौशनी से चमकते भारत की सैटेलाइट तस्वीर") == "Devanagari (Hindi, Marathi)"
+
+
+def test_telegram_reply_has_verdict_evidence_and_both_languages(tmp_path):
+    from firstseen.telegram_bot import format_reply
+    client = client_with(tmp_path, lens_url_params(URL), VIRAL)
+    report, _ = check(client, image_url=URL, claim="Shark on the road in today's floods")
+    text = format_reply(report)
+    assert text.startswith("<b>Online since at least Jul 2011, not new</b>")
+    assert "Forward this:" in text and "हिंदी में:" in text and "यह तस्वीर नई नहीं है" in text

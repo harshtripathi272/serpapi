@@ -141,11 +141,16 @@ class SerpClient:
         self._fixtures = load_fixtures(fixtures) if self.mode == "replay" else {}
         self._lock = threading.Lock()
         self.credits_used = 0  # SerpApi searches made by this process
+        self.touched: set[str] = set()  # cache keys this client served or stored; record_fixtures exports these
 
     def cached(self, cache_params: dict[str, Any]) -> dict[str, Any] | None:
         """A stored response for these parameters, from fixtures or the cache. Never calls SerpApi."""
         key = cache_key(cache_params)
-        return self._fixtures.get(key) or self.cache.get(key)
+        data = self._fixtures.get(key) or self.cache.get(key)
+        if data is not None:
+            with self._lock:
+                self.touched.add(key)
+        return data
 
     def search(self, params: dict[str, Any], cache_params: dict[str, Any] | None = None) -> Fetched:
         """cache_params replaces params as the cache identity, e.g. an image hash instead of an image_id."""
@@ -157,7 +162,9 @@ class SerpClient:
         if self.mode == "replay":
             raise ReplayMiss(f"no fixture for {params.get('engine')} {cache_key(identity)[:12]}")
         data = self._call(params)
-        self.cache.put(identity, data)
+        key = self.cache.put(identity, data)
+        with self._lock:
+            self.touched.add(key)
         return Fetched(data, cached=False)
 
     def upload_image(self, image: bytes) -> str:

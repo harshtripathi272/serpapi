@@ -4,8 +4,12 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CreditMeter } from "@/components/CreditMeter";
+import { FactChecks } from "@/components/FactChecks";
 import { MatchList } from "@/components/MatchList";
+import { NewsNow } from "@/components/NewsNow";
+import { PastLives } from "@/components/PastLives";
 import { ProgressLog } from "@/components/ProgressLog";
+import { ReplyCard } from "@/components/ReplyCard";
 import { VerdictCard } from "@/components/VerdictCard";
 import { YearChart } from "@/components/YearChart";
 import { YearTitles } from "@/components/YearTitles";
@@ -52,6 +56,10 @@ export default function CheckPage() {
       {report && (
         <>
           <VerdictCard report={report} />
+          <ReplyCard report={report} />
+          <PastLives report={report} />
+          <FactChecks checks={report.fact_checks} />
+          {report.current_news && <NewsNow news={report.current_news} />}
           {report.years.length > 0 && <YearChart years={report.years} firstYear={report.first_seen?.date?.slice(0, 4)} />}
           {report.earliest.length > 0 && (
             <section className="grid gap-3">

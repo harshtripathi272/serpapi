@@ -1,0 +1,39 @@
+{
+ "params": {
+  "engine": "google",
+  "q": "NASA satellite India Diwali night",
+  "tbm": "nws",
+  "tbs": "qdr:w",
+  "gl": "in",
+  "hl": "en"
+ },
+ "response": {
+  "search_metadata": {
+   "id": "6ac7d742d20e168f2f430e45",
+   "status": "Success",
+   "json_endpoint": "https://serpapi.com/searches/n3aKY_w8T0BZyX1PHezn-tVZssh8jdcOX9lwm0DrbH4/6ac7d742d20e168f2f430e45.json",
+   "markdown_endpoint": "https://serpapi.com/searches/n3aKY_w8T0BZyX1PHezn-tVZssh8jdcOX9lwm0DrbH4/6ac7d742d20e168f2f430e45.md",
+   "pixel_position_endpoint": "https://serpapi.com/searches/n3aKY_w8T0BZyX1PHezn-tVZssh8jdcOX9lwm0DrbH4/6ac7d742d20e168f2f430e45.json_with_pixel_position",
+   "created_at": "2026-10-08 17:47:46 UTC",
+   "processed_at": "2026-10-08 17:47:46 UTC",
+   "google_url": "https://www.google.com/search?q=NASA+satellite+India+Diwali+night&oq=NASA+satellite+India+Diwali+night&hl=en&gl=in&tbm=nws&tbs=qdr:w&sourceid=chrome&ie=UTF-8",
+   "raw_html_file": "https://serpapi.com/searches/n3aKY_w8T0BZyX1PHezn-tVZssh8jdcOX9lwm0DrbH4/6ac7d742d20e168f2f430e45.html",
+   "total_time_taken": 0.31
+  },
+  "search_parameters": {
+   "engine": "google",
+   "q": "NASA satellite India Diwali night",
+   "google_domain": "google.com",
+   "hl": "en",
+   "gl": "in",
+   "device": "desktop",
+   "tbm": "nws",
+   "tbs": "qdr:w"
+  },
+  "search_information": {
+   "query_displayed": "NASA satellite India Diwali night",
+   "news_results_state": "Fully empty"
+  },
+  "error": "Google hasn't returned any results for this query."
+ }
+}

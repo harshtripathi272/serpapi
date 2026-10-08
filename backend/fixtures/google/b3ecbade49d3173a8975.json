@@ -1,0 +1,39 @@
+{
+ "params": {
+  "engine": "google",
+  "q": "Shark swimming highway Chennai floods",
+  "tbm": "nws",
+  "tbs": "qdr:w",
+  "gl": "in",
+  "hl": "en"
+ },
+ "response": {
+  "search_metadata": {
+   "id": "6ac7d74374268e8967a7aca3",
+   "status": "Success",
+   "json_endpoint": "https://serpapi.com/searches/l5Bn73Ip70fhv0_4GzjpbBCcqdewsAcpPvRRLqvPSMg/6ac7d74374268e8967a7aca3.json",
+   "markdown_endpoint": "https://serpapi.com/searches/l5Bn73Ip70fhv0_4GzjpbBCcqdewsAcpPvRRLqvPSMg/6ac7d74374268e8967a7aca3.md",
+   "pixel_position_endpoint": "https://serpapi.com/searches/l5Bn73Ip70fhv0_4GzjpbBCcqdewsAcpPvRRLqvPSMg/6ac7d74374268e8967a7aca3.json_with_pixel_position",
+   "created_at": "2026-10-08 17:47:47 UTC",
+   "processed_at": "2026-10-08 17:47:47 UTC",
+   "google_url": "https://www.google.com/search?q=Shark+swimming+highway+Chennai+floods&oq=Shark+swimming+highway+Chennai+floods&hl=en&gl=in&tbm=nws&tbs=qdr:w&sourceid=chrome&ie=UTF-8",
+   "raw_html_file": "https://serpapi.com/searches/l5Bn73Ip70fhv0_4GzjpbBCcqdewsAcpPvRRLqvPSMg/6ac7d74374268e8967a7aca3.html",
+   "total_time_taken": 41.59
+  },
+  "search_parameters": {
+   "engine": "google",
+   "q": "Shark swimming highway Chennai floods",
+   "google_domain": "google.com",
+   "hl": "en",
+   "gl": "in",
+   "device": "desktop",
+   "tbm": "nws",
+   "tbs": "qdr:w"
+  },
+  "search_information": {
+   "query_displayed": "Shark swimming highway Chennai floods",
+   "news_results_state": "Fully empty"
+  },
+  "error": "Google hasn't returned any results for this query."
+ }
+}

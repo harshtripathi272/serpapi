@@ -1,0 +1,62 @@
+{
+ "params": {
+  "engine": "google",
+  "q": "Ahmedabad airport flooded heavy rain",
+  "tbm": "nws",
+  "tbs": "qdr:w",
+  "gl": "in",
+  "hl": "en"
+ },
+ "response": {
+  "search_metadata": {
+   "id": "6ac7d70f532a17af57a05c72",
+   "status": "Success",
+   "json_endpoint": "https://serpapi.com/searches/AGcA6yGq3ol3lKeyc2rJzkbhg22Rgh7roFAWDTXLlzg/6ac7d70f532a17af57a05c72.json",
+   "markdown_endpoint": "https://serpapi.com/searches/AGcA6yGq3ol3lKeyc2rJzkbhg22Rgh7roFAWDTXLlzg/6ac7d70f532a17af57a05c72.md",
+   "pixel_position_endpoint": "https://serpapi.com/searches/AGcA6yGq3ol3lKeyc2rJzkbhg22Rgh7roFAWDTXLlzg/6ac7d70f532a17af57a05c72.json_with_pixel_position",
+   "created_at": "2026-10-08 17:46:55 UTC",
+   "processed_at": "2026-10-08 17:46:55 UTC",
+   "google_url": "https://www.google.com/search?q=Ahmedabad+airport+flooded+heavy+rain&oq=Ahmedabad+airport+flooded+heavy+rain&hl=en&gl=in&tbm=nws&tbs=qdr:w&sourceid=chrome&ie=UTF-8",
+   "raw_html_file": "https://serpapi.com/searches/AGcA6yGq3ol3lKeyc2rJzkbhg22Rgh7roFAWDTXLlzg/6ac7d70f532a17af57a05c72.html",
+   "total_time_taken": 45.32
+  },
+  "search_parameters": {
+   "engine": "google",
+   "q": "Ahmedabad airport flooded heavy rain",
+   "google_domain": "google.com",
+   "hl": "en",
+   "gl": "in",
+   "device": "desktop",
+   "tbm": "nws",
+   "tbs": "qdr:w"
+  },
+  "search_information": {
+   "query_displayed": "Ahmedabad airport flooded heavy rain",
+   "total_results": 3,
+   "time_taken_displayed": 0.24,
+   "news_results_state": "Results for exact spelling"
+  },
+  "news_results": [
+   {
+    "position": 1,
+    "link": "https://www.bhaskarenglish.in/local/gujarat/ahmedabad/news/ahmedabad-airport-winter-flight-schedule-diwali-travel-updates-139230362.html",
+    "title": "Frequency of 90 flights from Ahmedabad to increase: 16,000 seats opened for booking",
+    "source": "Bhaskar English",
+    "date": "5 days ago",
+    "published_at": "2026-10-03 02:18:47 UTC",
+    "snippet": "Follow Bhaskar English for Ahmedabad airport winter schedule and flight seat updates. The airports winter schedule, which begins on 25 October this year,...",
+    "thumbnail": "https://serpapi.com/searches/6ac7d70f532a17af57a05c72/images/qC8aoJjaMQjHW4oNX-MGdV0uqYG0zR2gtyJN0CRQm6U.jpeg"
+   },
+   {
+    "position": 2,
+    "link": "https://www.bhaskarenglish.in/local/uttar-pradesh/lucknow/news/indigo-flight-struck-lightning-patna-lucknow-emergency-landing-139281283.html",
+    "title": "IndiGo flight struck by lightning, makes emergency landing in Lucknow: Nose damaged; flight was headed from...",
+    "source": "Bhaskar English",
+    "date": "1 day ago",
+    "published_at": "2026-10-07 16:22:04 UTC",
+    "snippet": "An IndiGo flight from Patna to Lucknow was struck by lightning amid bad weather on Wednesday evening. The nose of the aircraft was damaged. At the time, the...",
+    "thumbnail": "https://serpapi.com/searches/6ac7d70f532a17af57a05c72/images/nYa9jVuJPxLtIXzBE8czmulhFnitArVOQbtuqOYMYUM.jpeg"
+   }
+  ]
+ }
+}

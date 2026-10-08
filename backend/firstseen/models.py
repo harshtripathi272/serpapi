@@ -17,12 +17,52 @@ class Match(BaseModel):
     thumbnail: str | None = None
     width: int | None = None
     height: int | None = None
+    fact_checker: str | None = None
 
 
 class YearBucket(BaseModel):
     year: int
     count: int
     examples: list[Match]
+    tags: list[str] = []
+
+
+class FactCheck(BaseModel):
+    title: str
+    link: str
+    publisher: str
+    date_text: str | None = None
+    found_in: Literal["copies", "similar"]
+
+
+class Article(BaseModel):
+    title: str
+    link: str
+    source: str | None = None
+    date_text: str | None = None
+
+
+class CurrentNews(BaseModel):
+    query: str
+    articles: list[Article]
+
+
+class Context(BaseModel):
+    kind: Literal["storm", "place", "event"]
+    label: str
+    count: int
+    first_year: int
+    last_year: int
+
+
+class ScriptCount(BaseModel):
+    name: str
+    count: int
+
+
+class Reply(BaseModel):
+    en: str
+    hi: str
 
 
 class Verdict(BaseModel):
@@ -48,6 +88,12 @@ class CheckReport(BaseModel):
     years: list[YearBucket]
     earliest: list[Match]
     verdict: Verdict
+    fact_checks: list[FactCheck] = []
+    falsely_shared_as: list[str] = []
+    contexts: list[Context] = []
+    scripts: list[ScriptCount] = []
+    current_news: CurrentNews | None = None
+    reply: Reply | None = None
 
 
 class CheckEvent(BaseModel):
