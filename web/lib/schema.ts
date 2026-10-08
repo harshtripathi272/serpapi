@@ -38,6 +38,7 @@ export const CheckReportSchema = z.object({
   dated_matches: z.number(),
   domains: z.number(),
   first_seen: MatchSchema.nullable(),
+  earliest_uncorroborated: MatchSchema.nullable(),
   widely_shared_by: z.number().nullable(),
   years: z.array(YearBucketSchema),
   earliest: z.array(MatchSchema),

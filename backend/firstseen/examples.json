@@ -1,5 +1,11 @@
 [
   {
+    "id": "chennai-airport",
+    "label": "\"Ahmedabad airport flooded today\"",
+    "image_url": "https://i.ndtvimg.com/video/images/vod/medium/2015-12/big_393136_1449034155.jpg",
+    "claim": "Ahmedabad airport flooded today after heavy rain"
+  },
+  {
     "id": "nasa-diwali",
     "label": "\"NASA's photo of India on Diwali night\"",
     "image_url": "https://earthsky.org/upl/2012/11/India_Diwali_fake-e1353258478199.jpeg",

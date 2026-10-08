@@ -19,6 +19,8 @@ from .serp import ReplayMiss, SerpClient
 LENS = {"engine": "google_lens", "type": "exact_matches", "country": "in", "hl": "en"}
 EXAMPLES_PER_YEAR = 3
 WIDELY_SHARED = 5  # dated copies needed before we say an image was widely shared
+CORROBORATE_DAYS = 30  # a "first seen" date needs CORROBORATE_SITES sites within this many days
+CORROBORATE_SITES = 3
 EARLIEST_SHOWN = 12
 RECENT_DAYS = 30
 # Claim words that mean "this is happening now", in English and romanised Hindi.
@@ -155,6 +157,26 @@ def _when(d: date) -> str:
     return f"{d.day} {d:%b %Y}"
 
 
+def corroborated_first(dated: list[Match], window_days: int = CORROBORATE_DAYS,
+                       min_sites: int = CORROBORATE_SITES) -> Match | None:
+    """Earliest copy with min_sites different sites showing the image within window_days.
+
+    Pages can carry the wrong date. The December 2015 Chennai airport flood photo has two
+    copies dated March 2015, nine months before the floods. Requiring several sites makes
+    the date conservative: the image was online at least this early. Falls back to the
+    earliest copy when no date is corroborated.
+    """
+    for i, m in enumerate(dated):
+        sites = {m.domain}
+        for other in dated[i + 1:]:
+            if (other.date - m.date).days > window_days:
+                break
+            sites.add(other.domain)
+        if len(sites) >= min_sites:
+            return m
+    return dated[0] if dated else None
+
+
 def widely_shared_by(years: list[YearBucket], threshold: int = WIDELY_SHARED) -> tuple[int, int] | None:
     """First year by which `threshold` dated copies existed, and how many existed by then.
 
@@ -169,7 +191,7 @@ def widely_shared_by(years: list[YearBucket], threshold: int = WIDELY_SHARED) ->
 
 
 def judge(first: Match | None, dated: int, total: int, years: list[YearBucket], claim: str | None,
-          searched_on: date) -> Verdict:
+          searched_on: date, outlier: Match | None = None) -> Verdict:
     if first is None or first.date is None:
         detail = (f"Lens found {total} pages with this exact image, but none show a date."
                   if total else
@@ -180,20 +202,23 @@ def judge(first: Match | None, dated: int, total: int, years: list[YearBucket], 
     spread = f"Lens found {dated} dated copies across {active} {'year' if active == 1 else 'years'}."
     if shared := widely_shared_by(years):
         spread += f" {shared[1]} copies existed by the end of {shared[0]}."
+    if outlier and outlier.date:
+        spread += (f" Some pages are dated earlier, from {_when(outlier.date)} ({outlier.domain}), "
+                   "but too few sites agree on those dates to rely on them.")
     claim_years = [int(y) for y in _CLAIM_YEAR.findall(claim or "")]
     says_recent = bool(claim and _RECENT.search(claim))
     old = (searched_on - first.date).days > RECENT_DAYS
     if claim and ((says_recent and old) or (claim_years and first.date.year < min(claim_years))):
         return Verdict(
             label="older_than_claimed",
-            headline=f"Online since {first.date:%b %Y}, not new",
+            headline=f"Online since at least {first.date:%b %Y}, not new",
             detail=(f"The claim presents this as new, but this exact image was on {first.domain} on "
                     f"{_when(first.date)}, {_ago(first.date, searched_on)} before this check. {spread}"),
         )
     return Verdict(
         label="first_seen",
-        headline=f"First seen {_when(first.date)}",
-        detail=f"Earliest dated copy: {first.domain}. {spread}"
+        headline=f"Online since at least {_when(first.date)}",
+        detail=f"Earliest well-attested copy: {first.domain}. {spread}"
                + (" Compare that date with what the claim says." if claim else ""),
     )
 
@@ -210,7 +235,8 @@ async def run_check(inp: CheckInput, client: SerpClient, emit: EmitFn, *, check_
         by_year[m.date.year].append(m)
     years = [YearBucket(year=y, count=len(ms), examples=_distinct(ms)[:EXAMPLES_PER_YEAR])
              for y, ms in sorted(by_year.items())]
-    first = dated[0] if dated else None
+    first = corroborated_first(dated)
+    outlier = dated[0] if dated and first is not dated[0] else None
     progress("info", f"{len(matches)} copies found, {len(dated)} with dates")
 
     return CheckReport(
@@ -225,8 +251,9 @@ async def run_check(inp: CheckInput, client: SerpClient, emit: EmitFn, *, check_
         dated_matches=len(dated),
         domains=len({m.domain for m in matches}),
         first_seen=first,
+        earliest_uncorroborated=outlier,
         years=years,
         earliest=_distinct(dated)[:EARLIEST_SHOWN],
         widely_shared_by=(widely_shared_by(years) or (None,))[0],
-        verdict=judge(first, len(dated), len(matches), years, inp.claim, when),
+        verdict=judge(first, len(dated), len(matches), years, inp.claim, when, outlier),
     )

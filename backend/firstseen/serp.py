@@ -94,11 +94,17 @@ def load_fixtures(directory: Path) -> dict[str, dict[str, Any]]:
     return index
 
 
-def export_fixtures(cache: ResponseCache, out_dir: Path, transform=None, engines: set[str] | None = None) -> int:
-    """Write cached responses as replay fixtures. transform(params, response) may rewrite both."""
+def export_fixtures(cache: ResponseCache, out_dir: Path, transform=None, engines: set[str] | None = None,
+                    keep=None) -> int:
+    """Write cached responses as replay fixtures.
+
+    transform(params, response) may rewrite both; keep(params, response) may skip a row.
+    """
     count = 0
     for params, response in cache.rows():
         if engines and params.get("engine") not in engines:
+            continue
+        if keep and not keep(params, response):
             continue
         p, r = transform(params, response) if transform else (params, response)
         path = out_dir / str(p.get("engine", "unknown")) / f"{cache_key(p)[:20]}.json"

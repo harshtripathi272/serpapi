@@ -8,11 +8,17 @@ through SerpApi, for every page that carries the exact same image. It reads the 
 Google shows for each page and lays them out on a timeline. Each check is one SerpApi
 search.
 
-Two live results from October 2026:
+Three live results from October 2026:
 
-- **"NASA's photo of India on Diwali night"**: 393 copies, 227 of them dated. The earliest
-  is from 2007, and 21 copies existed by the end of 2011. PetaPixel and Core77 debunked
-  it in 2011, and Telugu and Malayalam sites were still listing it as a hoax in 2015 and 2016.
+- **"Ahmedabad airport flooded today"**: the photo is Chennai airport on 2 Dec 2015, which
+  Times of India and Factly have both debunked when it was recirculated. First Seen finds
+  63 copies, 47 of them online by the end of 2015, the earliest well-attested one on
+  ndtv.com that same day. Two pages dated March 2015 are flagged as unreliable, since too
+  few sites agree on those dates.
+- **"NASA's photo of India on Diwali night"**: 393 copies, 227 of them dated, online since
+  at least October 2011, with scattered pages dated back to 2007. PetaPixel and Core77
+  debunked it in 2011, and Telugu and Malayalam sites were still listing it as a hoax in
+  2015 and 2016.
 - **"Shark on the highway in today's floods"**: 399 copies, the earliest dated 24 Aug 2011
   (Hurricane Irene). It came back for Hurricane Harvey in 2017 and Florence in 2018,
   and a Tamil page in 2016 listed it among the hoaxes that fooled people in 2015.

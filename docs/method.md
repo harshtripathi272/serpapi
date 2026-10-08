@@ -10,9 +10,12 @@
    same way it did live. See `backend/firstseen/dates.py`.
 3. **Timeline.** Dated copies are grouped by year. For each year the report keeps up to 3
    copies from different sites, which shows what the photo was said to be that year.
-4. **First seen.** The earliest dated copy. One old page can mislead (it may be misdated,
-   or have added the image later), so the report also gives the year by which 5 dated
-   copies existed.
+4. **First seen.** The earliest date that 3 different sites back up, within 30 days of
+   each other. Pages can be misdated. The December 2015 Chennai airport flood photo has two
+   pages dated March 2015, nine months before the floods. So the verdict says the photo
+   was online *at least* since that date. A later, well-attested date can understate the
+   photo's age, but never overstate it. Earlier dates that too few sites agree on are
+   reported, not used. The report also gives the year by which 5 dated copies existed.
 5. **Verdict.**
    - *Older than claimed:* the claim says the photo is new ("today", "just", "aaj", "abhi",
      "breaking"...) and the first copy is more than 30 days old, or the claim names a year

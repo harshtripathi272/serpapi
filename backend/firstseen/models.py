@@ -43,6 +43,7 @@ class CheckReport(BaseModel):
     dated_matches: int
     domains: int
     first_seen: Match | None = None
+    earliest_uncorroborated: Match | None = None
     widely_shared_by: int | None = None
     years: list[YearBucket]
     earliest: list[Match]

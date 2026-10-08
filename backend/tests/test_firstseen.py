@@ -74,6 +74,17 @@ def test_old_image_with_recent_claim_is_older_than_claimed(tmp_path):
     assert report.widely_shared_by == 2026  # cumulative copies: 2 in 2011, 3 by 2022, 4 by 2024, 6 by 2026
 
 
+def test_lone_early_date_does_not_set_first_seen(tmp_path):
+    # Shaped like the Chennai airport photo: pages dated months before the event, then a burst.
+    response = lens_response(["12 Mar 2015", "12 Mar 2015", "2 Dec 2015", "2 Dec 2015", "3 Dec 2015", "10 Dec 2016"])
+    client = client_with(tmp_path, lens_url_params(URL), response)
+    report, _ = check(client, image_url=URL, claim="flooded today")
+    assert report.first_seen.date == date(2015, 12, 2)
+    assert report.earliest_uncorroborated.date == date(2015, 3, 12)
+    assert report.verdict.headline == "Online since at least Dec 2015, not new"
+    assert "too few sites agree" in report.verdict.detail
+
+
 def test_claim_year_after_first_seen_is_older_than_claimed(tmp_path):
     client = client_with(tmp_path, lens_url_params(URL), VIRAL)
     report, _ = check(client, image_url=URL, claim="Floods in Assam, 2025")
@@ -84,7 +95,7 @@ def test_no_claim_reports_first_seen(tmp_path):
     client = client_with(tmp_path, lens_url_params(URL), VIRAL)
     report, _ = check(client, image_url=URL)
     assert report.verdict.label == "first_seen"
-    assert report.verdict.headline == "First seen 14 Jul 2011"
+    assert report.verdict.headline == "Online since at least 14 Jul 2011"
 
 
 def test_fresh_image_has_no_history(tmp_path):
