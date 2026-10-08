@@ -2,8 +2,8 @@
 
 **Before you forward it, see where it's been.**
 
-Drop in a photo from a WhatsApp forward. First Seen asks SerpApi's Google Lens API for
-every page that carries it, dates each copy, and in about ten seconds answers:
+Drop in a photo or video from a WhatsApp forward. First Seen asks SerpApi's Google Lens
+API for every page that carries it, dates each copy, and in about ten seconds answers:
 
 1. **When was this photo first online?** The earliest date that several sites agree on.
 2. **What has it been passed off as before?** Its "past lives": storms, places and events.
@@ -11,7 +11,12 @@ every page that carries it, dates each copy, and in about ten seconds answers:
 4. **Is the claimed event even in the news?** Google News from the past week.
 
 It then writes a reply in **English and Hindi** to paste back into the group, as text or
-an image card. A **Telegram bot** gives the same answer from your phone.
+an image card. You can use it three ways:
+
+- **Web app:** upload a photo or video, or paste a link. A claim can be in English or Hindi.
+- **Telegram bot:** forward the photo or video to the bot.
+- **Browser extension:** right-click any image, including on WhatsApp Web, and pick
+  *Check with First Seen*.
 
 ## One real check
 
@@ -49,8 +54,9 @@ one step, with a link for every claim it makes.
 | The news now | Google Search API, `tbm=nws`, `tbs=qdr:w` | whether the claimed event is being reported this week | 1, only with a claim |
 | Uploads | Image API | photos from a phone or WhatsApp that have no URL | 0 (we measured: uploads use no search credits) |
 
-That's 3 searches per check. Responses are cached by image URL, or by the SHA-256 of the
-uploaded bytes, so checking the same photo again costs nothing.
+That's 3 searches per photo check. A video takes 1 exact-match search per scene, up to 3
+scenes. Responses are cached by image URL, or by the SHA-256 of the uploaded bytes, so
+checking the same photo again costs nothing.
 
 ## How it decides
 
@@ -65,18 +71,25 @@ uploaded bytes, so checking the same photo again costs nothing.
   post saying "fake" is often the hoax itself.
 - **Passed off as** lists the places and storms that debunks name, minus where the photo
   actually started.
+- **Videos** are split into scenes with OpenCV: a scene changes when both the colour
+  histogram and the grayscale layout change. Black letterbox bars are trimmed, and the
+  sharpest frame of each of the 3 longest scenes is dated on its own. A slideshow of two
+  old photos gets two first-seen dates.
+- **Claims in Hindi** work too. "आज", "अभी" and "ताज़ा" count as saying the photo is new.
 
 Details and limits: [docs/method.md](docs/method.md).
 
 ```mermaid
 flowchart LR
   W[Web app] --> A
+  E[Browser extension] --> A
   T[Telegram bot] --> P
   A[FastAPI + SSE] --> P[provenance.run_check]
   P --> L1[Lens exact_matches]
   P --> L2[Lens visual_matches]
   P --> N[Google News, past week]
   P --> U[Image API upload]
+  P --> V[OpenCV keyframes, for videos]
   L1 & L2 & N --> C[(SQLite cache / replay fixtures)]
 ```
 
@@ -103,6 +116,9 @@ npm run dev                   # http://localhost:3000
 
 Telegram bot (optional): create a bot with @BotFather, put `TELEGRAM_BOT_TOKEN` in
 `backend/.env`, then run `python -m firstseen.telegram_bot` from `backend/`.
+
+Browser extension (optional): load the `extension/` folder unpacked in Chrome. See
+[extension/README.md](extension/README.md).
 
 ### Without an API key
 

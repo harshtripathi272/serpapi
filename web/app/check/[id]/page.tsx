@@ -11,6 +11,7 @@ import { PastLives } from "@/components/PastLives";
 import { ProgressLog } from "@/components/ProgressLog";
 import { ReplyCard } from "@/components/ReplyCard";
 import { VerdictCard } from "@/components/VerdictCard";
+import { VideoFrames } from "@/components/VideoFrames";
 import { YearChart } from "@/components/YearChart";
 import { YearTitles } from "@/components/YearTitles";
 import { eventsUrl, getReport } from "@/lib/api";
@@ -56,6 +57,7 @@ export default function CheckPage() {
       {report && (
         <>
           <VerdictCard report={report} />
+          <VideoFrames frames={report.frames} />
           <ReplyCard report={report} />
           <PastLives report={report} />
           <FactChecks checks={report.fact_checks} />

@@ -65,6 +65,16 @@ class Reply(BaseModel):
     hi: str
 
 
+class FrameResult(BaseModel):
+    """One keyframe of a video, checked on its own."""
+
+    time_s: float
+    scene_seconds: float
+    copies: int
+    first_seen: Date | None = None
+    first_seen_domain: str | None = None
+
+
 class Verdict(BaseModel):
     label: Literal["older_than_claimed", "first_seen", "no_history"]
     headline: str
@@ -94,6 +104,8 @@ class CheckReport(BaseModel):
     scripts: list[ScriptCount] = []
     current_news: CurrentNews | None = None
     reply: Reply | None = None
+    media: Literal["image", "video"] = "image"
+    frames: list[FrameResult] = []
 
 
 class CheckEvent(BaseModel):

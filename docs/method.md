@@ -20,6 +20,22 @@ One Google Lens API call with `type=exact_matches` and `country=in`.
   Earlier dates that too few sites agree on are reported, not used. The report also
   gives the year by which 5 dated copies existed.
 
+## Videos (`video.py`)
+
+Lens searches images, so a video is checked scene by scene:
+
+1. Sample 2 frames a second, trimming black letterbox and pillarbox bars from each one.
+   Bars would otherwise make every scene look alike, and they break exact matching.
+2. Start a new scene only when both the colour histogram (correlation below 0.6) and the
+   32×32 grayscale layout (below 0.7) change. Codecs sometimes garble a frame's colours,
+   and the layout check stops that from splitting a scene.
+3. Skip black or flat frames, such as fades and title cards.
+4. Keep the sharpest frame (by Laplacian variance) of each of the 3 longest scenes.
+5. Date each keyframe separately, in parallel, then merge the copies.
+
+The report lists every scene with its own first-seen date. A WhatsApp slideshow of two old
+photos therefore gets two dates.
+
 ## 2. Past lives (`contexts.py`)
 
 Each copy's title is tagged with three kinds of label:
@@ -65,7 +81,7 @@ so "90 flights from Ahmedabad" doesn't match "Ahmedabad airport flooded".
 ## 5. Verdict and reply
 
 - *Older than claimed:* the claim says the photo is new ("today", "just", "aaj", "abhi",
-  "breaking"...) and the first well-attested copy is more than 30 days old, or the claim
+  "आज", "अभी", "breaking"...) and the first well-attested copy is more than 30 days old, or the claim
   names a year later than that copy.
 - *First seen:* there are dated copies, but no claim conflicts with them.
 - *No history:* no dated copies. That fits an original photo, or one too new to be indexed.

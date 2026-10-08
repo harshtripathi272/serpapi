@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "First Seen",
+  "version": "0.1.0",
+  "description": "Right-click any image, including on WhatsApp Web, to see where and when it appeared online before.",
+  "permissions": ["contextMenus", "scripting", "activeTab"],
+  "host_permissions": ["http://localhost:8000/*"],
+  "background": { "service_worker": "background.js" },
+  "icons": { "16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png" }
+}

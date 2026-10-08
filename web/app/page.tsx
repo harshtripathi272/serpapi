@@ -17,6 +17,14 @@ export default function Home() {
 
   useEffect(() => {
     getExamples().then(setExamples, () => setExamples([]));
+    // Deep link, used by the browser extension: /?image_url=...&claim=... starts a check right away.
+    const params = new URLSearchParams(window.location.search);
+    const linked = params.get("image_url");
+    if (linked) {
+      setImageUrl(linked);
+      setClaim(params.get("claim") ?? "");
+      run({ imageUrl: linked, claim: params.get("claim") ?? undefined });
+    }
   }, []);
 
   useEffect(() => {
@@ -53,7 +61,7 @@ export default function Home() {
     <main className="mx-auto max-w-2xl px-4 py-14">
       <h1 className="text-4xl font-semibold tracking-tight">First Seen</h1>
       <p className="mt-3 text-lg text-neutral-600">
-        Got a forwarded photo? See where it appeared online before, and when.
+        Got a forwarded photo or video? See where it appeared online before, and when.
       </p>
 
       <form onSubmit={onSubmit} className="mt-10 grid gap-5">
@@ -63,13 +71,17 @@ export default function Home() {
           className="grid cursor-pointer place-items-center gap-2 rounded-lg border-2 border-dashed border-neutral-300 bg-white p-6 text-center hover:border-neutral-500"
         >
           {preview ? (
-            <img src={preview} alt="Selected photo" className="max-h-56 rounded" />
+            file?.type.startsWith("video/") ? (
+              <video src={preview} className="max-h-56 rounded" muted autoPlay loop playsInline />
+            ) : (
+              <img src={preview} alt="Selected photo" className="max-h-56 rounded" />
+            )
           ) : (
-            <span className="text-neutral-600">Drop the photo here, or click to choose one</span>
+            <span className="text-neutral-600">Drop the photo or video here, or click to choose one</span>
           )}
           <input
             type="file"
-            accept="image/jpeg,image/png,image/webp"
+            accept="image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm"
             className="sr-only"
             onChange={(e) => setFile(e.target.files?.[0] ?? null)}
           />

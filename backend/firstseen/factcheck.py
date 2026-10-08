@@ -36,7 +36,8 @@ _DEBUNK = re.compile(
     re.IGNORECASE,
 )
 _RECENT_WORDS = {"today", "todays", "today's", "tonight", "now", "just", "recent", "recently", "breaking", "live",
-                 "latest", "yesterday", "aaj", "abhi", "kal", "this", "morning", "week"}
+                 "latest", "yesterday", "aaj", "abhi", "kal", "this", "morning", "week",
+                 "आज", "अभी", "कल", "ताज़ा", "ताजा", "लाइव"}
 _STOP = {
     "a", "an", "the", "of", "in", "on", "at", "to", "for", "and", "or", "is", "are", "was", "were", "be", "been",
     "after", "before", "during", "with", "by", "from", "as", "it", "its", "that", "these", "those", "here", "there",
@@ -45,7 +46,8 @@ _STOP = {
     "facebook", "instagram", "twitter", "youtube", "reddit", "tumblr", "blog", "blogspot", "news", "page", "post",
     "की", "का", "के", "में", "है", "हैं", "से", "पर", "यह", "ये", "और", "को", "तस्वीर", "वीडियो",
 }
-_WORD = re.compile(r"[^\W\d_]{3,}", re.UNICODE)
+# Letters plus Indic blocks: Devanagari vowel signs aren't \w, so a plain \w+ splits "अहमदाबाद" in two.
+_WORD = re.compile(r"(?:[^\W\d_]|[ऀ-෿]){3,}", re.UNICODE)
 
 
 def fact_checker_of(link: str | None) -> str | None:

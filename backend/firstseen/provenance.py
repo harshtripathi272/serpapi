@@ -6,7 +6,7 @@ import re
 import uuid
 from collections import defaultdict
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date, datetime, timezone
 from typing import Any
 from urllib.parse import urlparse
@@ -17,9 +17,11 @@ from .factcheck import (
     claim_keywords, fact_checker_of, is_social, looks_like_debunk, news_search_params, relevant,
 )
 from .reply import replies
+from .video import Keyframe, is_video, keyframes
 from .images import download, sha256, shrink
 from .models import (
-    Article, CheckEvent, CheckReport, Context, CurrentNews, FactCheck, Match, ScriptCount, Verdict, YearBucket,
+    Article, CheckEvent, CheckReport, Context, CurrentNews, FactCheck, FrameResult, Match, ScriptCount, Verdict,
+    YearBucket,
 )
 from .serp import ReplayMiss, SerpClient, SerpError
 
@@ -35,6 +37,8 @@ _RECENT = re.compile(
     r"\b(today|tonight|now|just|recent|recently|this morning|this week|yesterday|breaking|live|latest|aaj|abhi|kal)\b",
     re.IGNORECASE,
 )
+# Same idea in Devanagari. \b doesn't work there: vowel signs like the ी in अभी aren't \w.
+_RECENT_HI = re.compile(r"(?<![ऀ-ॿ])(आज|अभी|कल|ताज़ा|ताजा|लाइव|ब्रेकिंग)(?![ऀ-ॿ])")
 _CLAIM_YEAR = re.compile(r"\b(19\d{2}|20\d{2})\b")
 
 REPLAY_ONLY = "Replay mode only knows the example images. Set SERPAPI_MODE=cache and an API key to check others."
@@ -69,6 +73,7 @@ class LensTarget:
     url: str | None = None
     image: bytes | None = None
     image_id: str | None = None
+    upload_lock: asyncio.Lock = field(default_factory=asyncio.Lock, repr=False, compare=False)
 
     def identity(self, kind: str) -> dict[str, Any]:
         return lens_url_params(self.url, kind) if self.url else lens_hash_params(sha256(self.image), kind)
@@ -85,12 +90,13 @@ async def lens(client: SerpClient, target: LensTarget, kind: str, progress: _Pro
             return stored
         if client.mode == "replay":
             raise ReplayMiss(f"no fixture for {kind}")
-        if target.image_id is None:
-            small = await asyncio.to_thread(shrink, target.image)
-            if small is None:
-                raise CheckError("That file isn't a JPG, PNG or WebP image we can read.")
-            progress("info", "Uploading the image to SerpApi's Image API")
-            target.image_id = await asyncio.to_thread(client.upload_image, small)
+        async with target.upload_lock:  # exact and similar searches may start together
+            if target.image_id is None:
+                small = await asyncio.to_thread(shrink, target.image)
+                if small is None:
+                    raise CheckError("That file isn't a JPG, PNG or WebP image we can read.")
+                progress("info", "Uploading the image to SerpApi's Image API")
+                target.image_id = await asyncio.to_thread(client.upload_image, small)
         fetched = await asyncio.to_thread(client.search, {**LENS, "type": kind, "image_id": target.image_id}, identity)
     progress("call", label, cached=fetched.cached)
     return fetched.data
@@ -116,8 +122,18 @@ class _Progress:
         self.seq += 1
 
 
+EXACT_LABEL = "Google Lens: pages with this exact image"
+
+
+async def exact_matches(client: SerpClient, target: LensTarget, progress: _Progress) -> dict[str, Any]:
+    try:
+        return await lens(client, target, "exact_matches", progress, EXACT_LABEL)
+    except ReplayMiss as e:
+        raise CheckError(REPLAY_ONLY) from e
+
+
 async def find_matches(inp: CheckInput, client: SerpClient, progress: _Progress) -> tuple[dict[str, Any], LensTarget]:
-    exact = "Google Lens: pages with this exact image"
+    exact = EXACT_LABEL
     if inp.image_url:
         target = LensTarget(url=inp.image_url)
         try:
@@ -138,6 +154,46 @@ async def find_matches(inp: CheckInput, client: SerpClient, progress: _Progress)
         return await lens(client, target, "exact_matches", progress, exact), target
     except ReplayMiss as e:
         raise CheckError(REPLAY_ONLY) from e
+
+
+def _clock(seconds: float) -> str:
+    return f"{int(seconds) // 60}:{int(seconds) % 60:02d}"
+
+
+async def video_frames(video: bytes, progress: _Progress) -> tuple[list[Keyframe], list[LensTarget], int]:
+    """Keyframes, one Lens target per frame, and the index of the longest scene."""
+    frames = await asyncio.to_thread(keyframes, video)
+    if not frames:
+        raise CheckError("Couldn't read any frames from that video.")
+    progress("info", f"Pulled {len(frames)} keyframes from the video, one per scene")
+    longest = max(range(len(frames)), key=lambda i: frames[i].scene_seconds)
+    return frames, [LensTarget(image=k.jpeg) for k in frames], longest
+
+
+async def video_matches(frames: list[Keyframe], targets: list[LensTarget], client: SerpClient, progress: _Progress):
+    """Date each keyframe separately, then merge. Returns (merged response, per-frame results)."""
+
+    async def one(k: Keyframe, t: LensTarget) -> dict[str, Any]:
+        try:
+            return await lens(client, t, "exact_matches", progress, f"Google Lens: frame at {_clock(k.time_s)}")
+        except ReplayMiss as e:
+            raise CheckError(REPLAY_ONLY) from e
+
+    results = await asyncio.gather(*(one(k, t) for k, t in zip(frames, targets)))
+    merged: dict[str, dict[str, Any]] = {}
+    for data in results:
+        for m in data.get("exact_matches") or []:
+            merged.setdefault(m.get("link"), m)
+    combined = {"search_metadata": results[0].get("search_metadata") or {}, "exact_matches": list(merged.values())}
+    return combined, list(zip(frames, results))
+
+
+def _frame_result(k: Keyframe, data: dict[str, Any]) -> FrameResult:
+    when = searched_at(data)
+    matches = [_match(m, when) for m in data.get("exact_matches") or [] if m.get("link")]
+    first = corroborated_first(sorted((m for m in matches if m.date), key=lambda m: m.date))
+    return FrameResult(time_s=k.time_s, scene_seconds=k.scene_seconds, copies=len(matches),
+                       first_seen=first.date if first else None, first_seen_domain=first.domain if first else None)
 
 
 def _match(raw: dict[str, Any], when: date) -> Match:
@@ -235,7 +291,7 @@ def judge(first: Match | None, dated: int, total: int, years: list[YearBucket], 
         spread += (f" Some pages are dated earlier, from {_when(outlier.date)} ({outlier.domain}), "
                    "but too few sites agree on those dates to rely on them.")
     claim_years = [int(y) for y in _CLAIM_YEAR.findall(claim or "")]
-    says_recent = bool(claim and _RECENT.search(claim))
+    says_recent = bool(claim and (_RECENT.search(claim) or _RECENT_HI.search(claim)))
     old = (searched_on - first.date).days > RECENT_DAYS
     if claim and ((says_recent and old) or (claim_years and first.date.year < min(claim_years))):
         return Verdict(
@@ -254,7 +310,36 @@ def judge(first: Match | None, dated: int, total: int, years: list[YearBucket], 
 
 async def run_check(inp: CheckInput, client: SerpClient, emit: EmitFn, *, check_id: str | None = None) -> CheckReport:
     progress = _Progress(emit, client)
-    data, target = await find_matches(inp, client, progress)
+    # Three searches, started as early as each allows and run together. News needs only the claim.
+    # The similar-images search (fact-checks republish photos stamped or in collages) needs only the
+    # URL, the uploaded bytes, or the video's longest scene: it never waits for the exact-match search.
+    similar_label = "Google Lens: visually similar images"
+    news_query = claim_keywords(inp.claim) if inp.claim else ""
+    news_task = asyncio.create_task(_optional(lambda: _news(client, progress, news_query)) if news_query else _nothing())
+    similar_task: asyncio.Task | None = None
+
+    def start_similar(t: LensTarget) -> asyncio.Task:
+        return asyncio.create_task(_optional(lambda: lens(client, t, "visual_matches", progress, similar_label)))
+
+    per_frame = None
+    try:
+        if inp.image and is_video(inp.image):
+            frames, targets, longest = await video_frames(inp.image, progress)
+            target = targets[longest]
+            similar_task = start_similar(target)
+            data, per_frame = await video_matches(frames, targets, client, progress)
+        elif inp.image:
+            target = LensTarget(image=inp.image)
+            similar_task = start_similar(target)
+            data = await exact_matches(client, target, progress)
+        else:
+            similar_task = start_similar(LensTarget(url=inp.image_url)) if inp.image_url else None
+            data, target = await find_matches(inp, client, progress)
+    except BaseException:
+        news_task.cancel()
+        if similar_task:
+            similar_task.cancel()
+        raise
 
     when = searched_at(data)
     matches = [_match(m, when) for m in data.get("exact_matches") or [] if m.get("link")]
@@ -269,13 +354,11 @@ async def run_check(inp: CheckInput, client: SerpClient, emit: EmitFn, *, check_
     outlier = dated[0] if dated and first is not dated[0] else None
     progress("info", f"{len(matches)} copies found, {len(dated)} with dates")
 
-    # Two more searches, run together. Lens visual matches catch fact-checks that republish the photo
-    # stamped or in a collage (not exact copies). Google News says whether the claimed event is in the news.
-    news_query = claim_keywords(inp.claim) if inp.claim else ""
-    similar_data, news_data = await asyncio.gather(
-        _optional(lens(client, target, "visual_matches", progress, "Google Lens: visually similar images")),
-        _optional(_news(client, progress, news_query)) if news_query else _nothing(),
-    )
+    similar_data = await similar_task if similar_task else None
+    if inp.image_url and target.url is None:
+        # Lens couldn't open the URL, so we uploaded the bytes: search similar images by that upload too.
+        similar_data = await _optional(lambda: lens(client, target, "visual_matches", progress, similar_label))
+    news_data = await news_task
     fact_checks = _fact_checks(matches, similar_data)
     current_news = _current_news(news_query, news_data) if news_data is not None else None
     verdict = judge(first, len(dated), len(matches), years, inp.claim, when, outlier)
@@ -306,6 +389,8 @@ async def run_check(inp: CheckInput, client: SerpClient, emit: EmitFn, *, check_
         scripts=[ScriptCount(**s) for s in scripts([m.title for m in matches])],
         current_news=current_news,
         falsely_shared_as=falsely_shared_as,
+        media="video" if per_frame else "image",
+        frames=[_frame_result(k, d) for k, d in per_frame] if per_frame else [],
     )
     report.reply = replies(report)
     return report
@@ -315,10 +400,13 @@ async def _nothing() -> None:
     return None
 
 
-async def _optional(search) -> dict | None:
-    """A supporting search. If it fails, or replay has no fixture for it, the check still completes."""
+async def _optional(make_search: Callable[[], Any]) -> dict | None:
+    """A supporting search. If it fails, or replay has no fixture for it, the check still completes.
+
+    Takes a factory, not a coroutine, so a task cancelled before it starts leaves nothing un-awaited.
+    """
     try:
-        return await search
+        return await make_search()
     except (ReplayMiss, SerpError, CheckError):
         return None
 

@@ -1,4 +1,4 @@
-"""Telegram bot: forward a photo (claim as caption, optional), get First Seen's verdict back.
+"""Telegram bot: forward a photo or video (claim as caption, optional), get First Seen's verdict back.
 
 Long polling, so it runs on a laptop with no public URL.
 
@@ -23,9 +23,9 @@ from .serp import SerpClient, SerpError
 API = "https://api.telegram.org"
 _URL = re.compile(r"https?://\S+")
 WELCOME = (
-    "Forward me a photo from WhatsApp or anywhere else. Add what the message claims as the caption if you like.\n"
+    "Forward me a photo or video from WhatsApp or anywhere else. Add what the message claims as the caption if you like.\n"
     "I'll tell you where it appeared online before, and when.\n\n"
-    "कोई भी फ़ॉरवर्ड की गई तस्वीर भेजें। मैं बताऊँगा कि यह पहले इंटरनेट पर कहाँ और कब दिखी थी।"
+    "कोई भी फ़ॉरवर्ड की गई तस्वीर या वीडियो भेजें। मैं बताऊँगा कि यह पहले इंटरनेट पर कहाँ और कब दिखी थी।"
 )
 
 
@@ -61,12 +61,24 @@ class Bot:
         resp.raise_for_status()
         return resp.json()["result"]
 
-    def photo_bytes(self, photos: list[dict]) -> bytes:
-        largest = max(photos, key=lambda p: p.get("file_size") or p["width"] * p["height"])
-        path = self.call("getFile", file_id=largest["file_id"])["file_path"]
-        resp = self.session.get(f"{self.files}/{path}", timeout=60)
+    def file_bytes(self, file_id: str) -> bytes:
+        path = self.call("getFile", file_id=file_id)["file_path"]
+        resp = self.session.get(f"{self.files}/{path}", timeout=120)
         resp.raise_for_status()
         return resp.content
+
+    @staticmethod
+    def media_file_id(message: dict) -> str | None:
+        """The forwarded photo, video, GIF, or image/video sent as a file. Bots can fetch files up to 20 MB."""
+        if message.get("photo"):
+            return max(message["photo"], key=lambda p: p.get("file_size") or p["width"] * p["height"])["file_id"]
+        for key in ("video", "animation", "video_note"):
+            if message.get(key):
+                return message[key]["file_id"]
+        doc = message.get("document") or {}
+        if str(doc.get("mime_type", "")).startswith(("image/", "video/")):
+            return doc["file_id"]
+        return None
 
     def handle(self, message: dict) -> None:
         chat = message["chat"]["id"]
@@ -75,14 +87,15 @@ class Bot:
             self.call("sendMessage", chat_id=chat, text=WELCOME)
             return
         url = _URL.search(text)
-        if not message.get("photo") and not url:
-            self.call("sendMessage", chat_id=chat, text="Send a photo, or a link to one.")
+        file_id = self.media_file_id(message)
+        if not file_id and not url:
+            self.call("sendMessage", chat_id=chat, text="Send a photo or video, or a link to one.")
             return
         self.call("sendChatAction", chat_id=chat, action="typing")
         claim = _URL.sub("", text).strip() or None
         try:
-            if message.get("photo"):
-                inp = CheckInput(image=self.photo_bytes(message["photo"]), claim=claim)
+            if file_id:
+                inp = CheckInput(image=self.file_bytes(file_id), claim=claim)
             else:
                 inp = CheckInput(image_url=url.group(0), claim=claim)
             report = asyncio.run(run_check(inp, self.client, lambda e: None))
@@ -125,7 +138,10 @@ def main() -> int:
     if not token:
         print("Set TELEGRAM_BOT_TOKEN in backend/.env (create a bot with @BotFather first).")
         return 2
-    Bot(token, SerpClient()).run()
+    try:
+        Bot(token, SerpClient()).run()
+    except KeyboardInterrupt:
+        print("Stopped.")
     return 0
 
 

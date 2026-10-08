@@ -26,7 +26,7 @@ from .models import CheckEvent, CheckReport
 from .provenance import CheckError, CheckInput, run_check
 from .serp import SerpClient, SerpError
 
-MAX_IMAGE_BYTES = 15_000_000
+MAX_UPLOAD_BYTES = 64_000_000  # WhatsApp videos run to 16 MB and more
 EXAMPLES = json.loads((Path(__file__).parent / "examples.json").read_text(encoding="utf-8"))
 
 app = FastAPI(title="First Seen")
@@ -75,8 +75,8 @@ async def start_check(
     claim: str | None = Form(default=None),
 ) -> dict[str, str]:
     image = await file.read() if file else None
-    if image and len(image) > MAX_IMAGE_BYTES:
-        raise HTTPException(413, "Image is larger than 15 MB")
+    if image and len(image) > MAX_UPLOAD_BYTES:
+        raise HTTPException(413, "File is larger than 64 MB")
     if not image and not image_url:
         raise HTTPException(422, "Send an image file or an image_url")
     check_id = uuid.uuid4().hex[:12]

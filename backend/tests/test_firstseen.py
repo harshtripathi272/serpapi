@@ -161,3 +161,21 @@ def test_telegram_reply_has_verdict_evidence_and_both_languages(tmp_path):
     text = format_reply(report)
     assert text.startswith("<b>Online since at least Jul 2011, not new</b>")
     assert "Forward this:" in text and "हिंदी में:" in text and "यह तस्वीर नई नहीं है" in text
+
+
+def test_hindi_claim_is_understood(tmp_path):
+    from firstseen.factcheck import claim_keywords
+    assert claim_keywords("आज अहमदाबाद एयरपोर्ट पानी में डूबा") == "अहमदाबाद एयरपोर्ट पानी डूबा"
+    client = client_with(tmp_path, lens_url_params(URL), VIRAL)
+    report, _ = check(client, image_url=URL, claim="अभी की तस्वीर: एयरपोर्ट पानी में डूबा")
+    assert report.verdict.label == "older_than_claimed"
+
+
+def test_telegram_picks_the_forwarded_media():
+    from firstseen.telegram_bot import Bot
+    photo = {"photo": [{"file_id": "small", "width": 90, "height": 90}, {"file_id": "big", "width": 1280, "height": 960}]}
+    assert Bot.media_file_id(photo) == "big"
+    assert Bot.media_file_id({"video": {"file_id": "v"}}) == "v"
+    assert Bot.media_file_id({"document": {"file_id": "d", "mime_type": "video/mp4"}}) == "d"
+    assert Bot.media_file_id({"document": {"file_id": "x", "mime_type": "application/pdf"}}) is None
+    assert Bot.media_file_id({"text": "hello"}) is None

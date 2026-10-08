@@ -74,6 +74,16 @@ export const CheckReportSchema = z.object({
   scripts: z.array(z.object({ name: z.string(), count: z.number() })),
   current_news: z.object({ query: z.string(), articles: z.array(ArticleSchema) }).nullable(),
   reply: z.object({ en: z.string(), hi: z.string() }).nullable(),
+  media: z.enum(["image", "video"]),
+  frames: z.array(
+    z.object({
+      time_s: z.number(),
+      scene_seconds: z.number(),
+      copies: z.number(),
+      first_seen: z.string().nullable(),
+      first_seen_domain: z.string().nullable(),
+    }),
+  ),
 });
 
 export const CheckEventSchema = z.object({
