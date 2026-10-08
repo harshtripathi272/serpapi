@@ -6,6 +6,8 @@ Prepared on 2026-10-09 after reading the local Claude conversation, the current 
 
 **The insight.** Searching for eight guests hides homes that accommodate four. Two smaller homes may offer the required bedrooms for less money. Finding a usable pair requires joining separate guest-count searches, checking different listing IDs, adding trip quotes, and checking the route between properties. The output is a concrete tradeoff the organizer can share with the group.
 
+**Positioning refinement, October 9.** Lead with "What is the price of staying together?" Show the observed one-home option beside cheaper split options, with the extra amount required to keep everyone under one roof. Let the organizer change the walking limit and see which plans remain. This is a recommendation based on the existing evidence file; the follow-up research did not refresh the accommodation quotes or spend SerpApi credits.
+
 **Competition fit.** Choose Travel & Local Discovery. The official deadline is October 10, 2026 at 23:59 IST. Submit through GitHub authentication with a public repository, setup instructions, a demo under three minutes showing local functionality, participant details, SerpApi usage explanation, existing-project disclosure, AI-tool disclosure, and accepted rules/terms. Drafts do not qualify until submitted. Each account supports three active projects. Each project may receive one competitive award. Report actual contributors truthfully for the two entries.
 
 Judging considers idea strength, originality, technical complexity, usefulness, and meaningful SerpApi use without fixed weights. Visual/video production quality does not affect judging. A clear result early in the demo is a strategy, not a published judging preference. More engines are not automatically better.
@@ -32,6 +34,8 @@ See `docs/roommath-feasibility.json` for compact observations, listing links, re
 
 Sources: [gallery](https://serpapi.github.io/BuiltWithSerpApi/), [Airbnb Split Stays](https://www.airbnb.com/help/article/3223).
 
+**Originality correction from follow-up research.** [HomeRunner Group Stays](https://homerunner.io/blog/group-stays/), announced September 4, 2026, already combines nearby homes for large groups, supports distance limits, and provides comparisons and a shareable booking checklist. The broader multi-home concept therefore has a direct commercial precedent. HomeRunner describes searching a property manager's existing listings. RoomMath's proposed distinction is a traveler-facing search across Airbnb results, a single-home price baseline, and route-based walking constraints with explicit quote evidence. Do not claim to have invented group splitting or that the idea has no competitors. The earlier gallery-only check was insufficient for that conclusion.
+
 **Why choose this over the other directions.** RingCheck and Asli already failed live tests in this workspace. Peak's proposed occupancy inference is invalid: absence from a relevance-ranked result sample does not establish that a property is booked. The existing Coorg probes also contain only three common listing IDs between their two date searches, with two unchanged prices and one approximately 1.8% change. They do not establish a holiday surge. A pricing assistant would also face direct competition from PriceLabs, which already offers nearby comparable listings and price explanations. RoomMath has a simpler verifiable result and a fresh live-data test.
 
 First Seen remains the more mature entry and has a strong public-interest story. RoomMath has a clearer money-saving result and fewer inference steps. That does not establish that judges will rank it higher. Keep both entries distinct and finish both demos.
@@ -43,12 +47,14 @@ Required behavior:
 - Fetch single-home results for eight adults and at least four bedrooms.
 - Fetch smaller-home results for four adults and at least two bedrooms.
 - Use identical check-in/check-out dates, currency and relevant amenity/quality filters.
+- Apply the same user-selected geographic boundary to both cohorts. Show each option's location and relevant amenities beside the price. The recorded plantation home and central Madikeri pair are different experiences; the quoted difference does not establish a like-for-like discount. An optional landmark constraint can narrow comparisons after the basic flow works.
 - Validate dates, quoted price basis, required fields, bedrooms, review thresholds and coordinates. Missing requirements produce an exclusion or unknown status, not an invented value.
 - Enumerate unordered pairs of distinct listing IDs. Each candidate must separately have been returned for the four-person query. Never infer guest capacity from bed count alone.
 - Add the two quoted trip totals. Keep the original qualifier and a per-person calculation separate; do not compare a nightly price with a trip total.
 - Use straight-line distance only to shortlist pairs. Check walking routes for a small number of candidates before claiming they meet a walking-time limit.
 - Distinguish checked pairs from unchecked ones. A cheapest checked pair is not necessarily the cheapest feasible pair unless all potentially better candidates have been evaluated.
 - Present a small set of options showing price, route, bedrooms, ratings, review counts, the single-home baseline, listing links and quote timestamps.
+- Label the difference as the extra quoted cost of the observed single-home option. Show alternatives that trade price against walking time; do not collapse the decision into an unexplained score. If no valid single-home baseline exists, show split options without calculating savings.
 - Explain the shared-space versus separation tradeoff. A split option must not be presented as categorically better for every group.
 - Show live/cache/replay status and search count. Replay works without a key with a visible capture timestamp.
 - Provide a copyable group summary with the two source links. No messaging integration is necessary.

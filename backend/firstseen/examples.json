@@ -3,18 +3,21 @@
     "id": "chennai-airport",
     "label": "\"Ahmedabad airport flooded today\"",
     "image_url": "https://i.ndtvimg.com/video/images/vod/medium/2015-12/big_393136_1449034155.jpg",
-    "claim": "Ahmedabad airport flooded today after heavy rain"
+    "claim": "Ahmedabad airport flooded today after heavy rain",
+    "thumbnail": "https://serpapi.com/searches/6ac7d3ccff596ea49e1b7264/images/TRzMUvGgdvQAHv1jjfYCd7O6ElYIxGqLpntvZX5xAqk.jpeg"
   },
   {
     "id": "nasa-diwali",
     "label": "\"NASA's photo of India on Diwali night\"",
     "image_url": "https://earthsky.org/upl/2012/11/India_Diwali_fake-e1353258478199.jpeg",
-    "claim": "NASA just released this satellite photo of India lit up on Diwali night"
+    "claim": "NASA just released this satellite photo of India lit up on Diwali night",
+    "thumbnail": "https://serpapi.com/searches/6ac7c9d4fb7620c33455989f/images/3vRCPbum7-FEKA7N0T2PpG9ediXKD20DoS5U_jCpFr8.jpeg"
   },
   {
     "id": "flood-shark",
     "label": "\"Shark on the road in today's floods\"",
     "image_url": "https://ktla.com/wp-content/uploads/sites/4/2023/08/image-1.png",
-    "claim": "Shark swimming on the highway in today's Chennai floods"
+    "claim": "Shark swimming on the highway in today's Chennai floods",
+    "thumbnail": "https://serpapi.com/searches/6ac7cc1aff7aa255b26746e0/images/re6Zr2Rpyc0ZrBKgfsFTlqsJoVgMAuh246qAbTaBpm8.jpeg"
   }
 ]

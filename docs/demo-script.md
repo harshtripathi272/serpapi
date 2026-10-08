@@ -1,8 +1,14 @@
 # Demo video script (target 2:50, limit 3:00)
 
 Record at 1080p. Run the backend in `cache` mode, so the first check is live and the rest are
-instant, and keep the credit meter visible (top right). The hackathon brief asks for this:
-"Show one live run; label any saved demo data."
+instant. At the end of the live check, open **How we checked** at the bottom of the result to
+show each SerpApi search marked *live* or *cached*. The hackathon brief asks for this: "Show
+one live run; label any saved demo data."
+
+Run the web app as a production build for the recording (`npm run build && npm start`); it is
+smoother than dev mode. If your screen recorder drops frames during animations, open the app
+once with `?static=1` to switch animations off for that browser session (`?static=0` turns
+them back on).
 
 Before recording:
 

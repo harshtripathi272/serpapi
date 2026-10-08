@@ -99,6 +99,7 @@ export const ExampleSchema = z.object({
   label: z.string(),
   image_url: z.string(),
   claim: z.string(),
+  thumbnail: z.string().optional(),
 });
 
 export type Match = z.infer<typeof MatchSchema>;
