@@ -1,0 +1,22 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Raw SerpApi data contains reviewer names. Only anonymised backend/fixtures/ is committed.
+spike_raw/
+asli_raw/
+backend/.cache/
+*.sqlite
+
+# Python
+__pycache__/
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# Node
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo

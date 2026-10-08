@@ -1,0 +1,14 @@
+[
+  {
+    "id": "nasa-diwali",
+    "label": "\"NASA's photo of India on Diwali night\"",
+    "image_url": "https://earthsky.org/upl/2012/11/India_Diwali_fake-e1353258478199.jpeg",
+    "claim": "NASA just released this satellite photo of India lit up on Diwali night"
+  },
+  {
+    "id": "flood-shark",
+    "label": "\"Shark on the road in today's floods\"",
+    "image_url": "https://ktla.com/wp-content/uploads/sites/4/2023/08/image-1.png",
+    "claim": "Shark swimming on the highway in today's Chennai floods"
+  }
+]
