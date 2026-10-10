@@ -1,7 +1,6 @@
 <div align="center">
 
 <img src="docs/media/logo.svg" width="72" alt="First Seen logo">
-
 # First Seen
 
 **Before you forward it, see where it's been.**
