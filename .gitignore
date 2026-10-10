@@ -20,3 +20,12 @@ node_modules/
 .next/
 next-env.d.ts
 *.tsbuildinfo
+probe_raw/
+
+# The teammate's separate entry (RoomMath) lives outside this repo
+docs/roommath-*
+
+# Local agent tooling
+.agents/
+.claude/
+skills-lock.json

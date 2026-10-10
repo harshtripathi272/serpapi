@@ -1,0 +1,317 @@
+{
+  "fps": 30,
+  "duration_s": 150.267,
+  "energy": "calm",
+  "lufs": -16,
+  "kit": "audio/kit",
+  "music": {
+    "file": "public/pad.mp3",
+    "start_s": 0,
+    "loop": false,
+    "fade_out_s": 2.5
+  },
+  "voice": [
+    {
+      "file": "public/vo/01-hook.mp3",
+      "start_s": 0.4
+    },
+    {
+      "file": "public/vo/02-problem.mp3",
+      "start_s": 9.467
+    },
+    {
+      "file": "public/vo/03-intro.mp3",
+      "start_s": 20.9
+    },
+    {
+      "file": "public/vo/04-input.mp3",
+      "start_s": 28.033
+    },
+    {
+      "file": "public/vo/05-searches.mp3",
+      "start_s": 35.8
+    },
+    {
+      "file": "public/vo/06-verdict.mp3",
+      "start_s": 55.9
+    },
+    {
+      "file": "public/vo/07-decides.mp3",
+      "start_s": 69.1
+    },
+    {
+      "file": "public/vo/08-lives.mp3",
+      "start_s": 89.767
+    },
+    {
+      "file": "public/vo/09-reply.mp3",
+      "start_s": 102.867
+    },
+    {
+      "file": "public/vo/10-everywhere.mp3",
+      "start_s": 115.033
+    },
+    {
+      "file": "public/vo/11-hood.mp3",
+      "start_s": 130.733
+    },
+    {
+      "file": "public/vo/12-outro.mp3",
+      "start_s": 142.533
+    }
+  ],
+  "duck_db": 8,
+  "silence_ok": [
+    [
+      149.27,
+      150.27
+    ]
+  ],
+  "cues": [
+    {
+      "id": "01-hook:message",
+      "frame": 14,
+      "sound": "pop/fs-253956-bubble-pop-1",
+      "weight": "support",
+      "visual": "appear",
+      "pan": -0.25
+    },
+    {
+      "id": "03-intro:logo",
+      "frame": 608,
+      "sound": "thump/fs-389999-thump-cloth-1+tap/kenney-impact-impact-glass-light-002",
+      "weight": "hero",
+      "visual": "appear",
+      "stop_before": true,
+      "build": true
+    },
+    {
+      "id": "04-input:tab",
+      "frame": 867,
+      "sound": "click/kenney-ui-audio-switch1",
+      "weight": "support",
+      "visual": "appear",
+      "pan": -0.35
+    },
+    {
+      "id": "04-input:key0",
+      "frame": 908,
+      "sound": "key/fs-194797-vintage-keyboard-3-1",
+      "weight": "support",
+      "visual": "move",
+      "pan": -0.35
+    },
+    {
+      "id": "04-input:key1",
+      "frame": 921,
+      "sound": "key/fs-194797-vintage-keyboard-3-1",
+      "weight": "support",
+      "visual": "move",
+      "pan": -0.35
+    },
+    {
+      "id": "04-input:key2",
+      "frame": 935,
+      "sound": "key/fs-194797-vintage-keyboard-3-1",
+      "weight": "support",
+      "visual": "move",
+      "pan": -0.35
+    },
+    {
+      "id": "04-input:key3",
+      "frame": 948,
+      "sound": "key/fs-194797-vintage-keyboard-3-1",
+      "weight": "support",
+      "visual": "move",
+      "pan": -0.35
+    },
+    {
+      "id": "04-input:submit",
+      "frame": 998,
+      "sound": "click/kenney-ui-audio-switch33",
+      "weight": "support",
+      "visual": "cut",
+      "pan": -0.35
+    },
+    {
+      "id": "05-searches:lens",
+      "frame": 1207,
+      "sound": "click/kenney-ui-audio-switch4",
+      "weight": "support",
+      "visual": "appear",
+      "pan": 0.3
+    },
+    {
+      "id": "05-searches:similar",
+      "frame": 1418,
+      "sound": "click/kenney-ui-audio-switch4",
+      "weight": "support",
+      "visual": "appear",
+      "pan": 0.3
+    },
+    {
+      "id": "05-searches:news",
+      "frame": 1508,
+      "sound": "click/kenney-ui-audio-switch4",
+      "weight": "support",
+      "visual": "appear",
+      "pan": 0.3
+    },
+    {
+      "id": "06-verdict:verdict",
+      "frame": 1665,
+      "sound": "thump/fs-389999-thump-cloth-1+tap/kenney-impact-impact-glass-light-002",
+      "weight": "hero",
+      "visual": "appear",
+      "pan": -0.2,
+      "stop_before": true,
+      "build": true
+    },
+    {
+      "id": "06-verdict:stats",
+      "frame": 1713,
+      "sound": "tick/fs-130388-clock-ticking-1",
+      "weight": "support",
+      "visual": "appear",
+      "pan": 0.3
+    },
+    {
+      "id": "07-decides:dots-b",
+      "frame": 2100,
+      "sound": "paper/fs-397550-page-turn-03-wav-2",
+      "weight": "support",
+      "visual": "move",
+      "pan": 0.2
+    },
+    {
+      "id": "07-decides:march",
+      "frame": 2158,
+      "sound": "tick/fs-130388-clock-ticking-1",
+      "weight": "support",
+      "visual": "appear",
+      "pan": -0.4
+    },
+    {
+      "id": "07-decides:reject",
+      "frame": 2311,
+      "sound": "tap/kenney-impact-impact-glass-heavy-003",
+      "weight": "support",
+      "visual": "appear",
+      "pan": -0.4
+    },
+    {
+      "id": "07-decides:first-seen",
+      "frame": 2402,
+      "sound": "thump/fs-389999-thump-cloth-1+tap/kenney-impact-impact-glass-light-002",
+      "weight": "hero",
+      "visual": "appear",
+      "pan": 0.2,
+      "stop_before": true
+    },
+    {
+      "id": "08-lives:chip1",
+      "frame": 2838,
+      "sound": "pop/fs-253956-bubble-pop-1",
+      "weight": "support",
+      "visual": "appear",
+      "pan": 0.3
+    },
+    {
+      "id": "08-lives:chip2",
+      "frame": 2913,
+      "sound": "pop/fs-253956-bubble-pop-1",
+      "weight": "support",
+      "visual": "appear",
+      "pan": 0.35
+    },
+    {
+      "id": "08-lives:boom",
+      "frame": 2974,
+      "sound": "click/kenney-ui-audio-switch4",
+      "weight": "support",
+      "visual": "appear",
+      "pan": 0.3
+    },
+    {
+      "id": "09-reply:news",
+      "frame": 3078,
+      "sound": "click/kenney-ui-audio-switch4",
+      "weight": "support",
+      "visual": "appear",
+      "pan": 0.3
+    },
+    {
+      "id": "09-reply:sheet",
+      "frame": 3186,
+      "sound": "swish/fs-268226-woosh-2-mp3-1",
+      "weight": "support",
+      "visual": "move",
+      "pan": -0.35
+    },
+    {
+      "id": "09-reply:hindi",
+      "frame": 3250,
+      "sound": "click/kenney-ui-audio-switch1",
+      "weight": "support",
+      "visual": "appear",
+      "pan": -0.35
+    },
+    {
+      "id": "10-everywhere:menu",
+      "frame": 3561,
+      "sound": "click/kenney-ui-audio-switch33",
+      "weight": "support",
+      "visual": "appear",
+      "pan": -0.4
+    },
+    {
+      "id": "10-everywhere:pick",
+      "frame": 3579,
+      "sound": "click/kenney-ui-audio-switch1",
+      "weight": "support",
+      "visual": "appear",
+      "pan": -0.3
+    },
+    {
+      "id": "10-everywhere:video",
+      "frame": 3668,
+      "sound": "swish/fs-268226-woosh-2-mp3-1",
+      "weight": "support",
+      "visual": "move",
+      "pan": 0.4
+    },
+    {
+      "id": "11-hood:row1",
+      "frame": 3978,
+      "sound": "click/kenney-ui-audio-switch4",
+      "weight": "support",
+      "visual": "appear",
+      "pan": 0.3
+    },
+    {
+      "id": "11-hood:row2",
+      "frame": 4051,
+      "sound": "click/kenney-ui-audio-switch4",
+      "weight": "support",
+      "visual": "appear",
+      "pan": 0.3
+    },
+    {
+      "id": "11-hood:row3",
+      "frame": 4117,
+      "sound": "click/kenney-ui-audio-switch4",
+      "weight": "support",
+      "visual": "appear",
+      "pan": 0.3
+    },
+    {
+      "id": "12-outro:logo",
+      "frame": 4279,
+      "sound": "thump/fs-389999-thump-cloth-1+tap/kenney-impact-impact-glass-light-002",
+      "weight": "hero",
+      "visual": "land",
+      "stop_before": true,
+      "build": true
+    }
+  ]
+}

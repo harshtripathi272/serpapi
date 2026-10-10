@@ -26,7 +26,13 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${jakarta.variable} ${devanagari.variable}`}>
+    // Browser extensions add attributes to <html> before React loads; don't warn about those.
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${jakarta.variable} ${devanagari.variable}`}
+      suppressHydrationWarning
+    >
       <body className="min-h-dvh">
         <ToastProvider>{children}</ToastProvider>
       </body>

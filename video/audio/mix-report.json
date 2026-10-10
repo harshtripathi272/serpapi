@@ -1,0 +1,705 @@
+{
+ "cues_file": "D:\\Workspace\\serpapi\\video\\audio\\cues.json",
+ "fps": 30,
+ "duration_s": 150.267,
+ "target_lufs": -16,
+ "master_lufs": -16.0,
+ "master_true_peak_db": -2.69,
+ "master_gain_db": 0.74,
+ "events": [
+  {
+   "id": "01-hook:message",
+   "sound": "pop/fs-253956-bubble-pop-1",
+   "files": [
+    "audio/kit\\pop/fs-253956-bubble-pop-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 0.4667,
+   "peak_s": 0.4667,
+   "pan": -0.25,
+   "gain_db": -25.01,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    0.4567,
+    0.5096
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "03-intro:logo",
+   "sound": "thump/fs-389999-thump-cloth-1+tap/kenney-impact-impact-glass-light-002",
+   "files": [
+    "audio/kit\\thump/fs-389999-thump-cloth-1.wav",
+    "audio/kit\\tap/kenney-impact-impact-glass-light-002.wav"
+   ],
+   "weight": "hero",
+   "align": "peak",
+   "cue_s": 20.2667,
+   "peak_s": 20.2667,
+   "pan": 0.0,
+   "gain_db": -9.78,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    20.2567,
+    20.3509
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "04-input:tab",
+   "sound": "click/kenney-ui-audio-switch1",
+   "files": [
+    "audio/kit\\click/kenney-ui-audio-switch1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 28.9,
+   "peak_s": 28.9,
+   "pan": -0.35,
+   "gain_db": -25.25,
+   "limited_by": "best-band target",
+   "band_hz": [
+    8000,
+    16000
+   ],
+   "win_s": [
+    28.89,
+    28.94
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "04-input:key0",
+   "sound": "key/fs-194797-vintage-keyboard-3-1",
+   "files": [
+    "audio/kit\\key/fs-194797-vintage-keyboard-3-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 30.2667,
+   "peak_s": 30.2667,
+   "pan": -0.35,
+   "gain_db": -9.9,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    30.2567,
+    30.3067
+   ],
+   "visual": "move"
+  },
+  {
+   "id": "04-input:key1",
+   "sound": "key/fs-194797-vintage-keyboard-3-1",
+   "files": [
+    "audio/kit\\key/fs-194797-vintage-keyboard-3-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 30.7,
+   "peak_s": 30.7,
+   "pan": -0.35,
+   "gain_db": -5.9,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    30.69,
+    30.74
+   ],
+   "visual": "move"
+  },
+  {
+   "id": "04-input:key2",
+   "sound": "key/fs-194797-vintage-keyboard-3-1",
+   "files": [
+    "audio/kit\\key/fs-194797-vintage-keyboard-3-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 31.1667,
+   "peak_s": 31.1667,
+   "pan": -0.35,
+   "gain_db": -5.9,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    31.1567,
+    31.2067
+   ],
+   "visual": "move"
+  },
+  {
+   "id": "04-input:key3",
+   "sound": "key/fs-194797-vintage-keyboard-3-1",
+   "files": [
+    "audio/kit\\key/fs-194797-vintage-keyboard-3-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 31.6,
+   "peak_s": 31.6,
+   "pan": -0.35,
+   "gain_db": -9.9,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    31.59,
+    31.64
+   ],
+   "visual": "move"
+  },
+  {
+   "id": "04-input:submit",
+   "sound": "click/kenney-ui-audio-switch33",
+   "files": [
+    "audio/kit\\click/kenney-ui-audio-switch33.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 33.2667,
+   "peak_s": 33.2667,
+   "pan": -0.35,
+   "gain_db": -21.53,
+   "limited_by": "best-band target",
+   "band_hz": [
+    500,
+    1000
+   ],
+   "win_s": [
+    33.2567,
+    33.3067
+   ],
+   "visual": "cut"
+  },
+  {
+   "id": "05-searches:lens",
+   "sound": "click/kenney-ui-audio-switch4",
+   "files": [
+    "audio/kit\\click/kenney-ui-audio-switch4.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 40.2333,
+   "peak_s": 40.2333,
+   "pan": 0.3,
+   "gain_db": -31.03,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    40.2233,
+    40.2733
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "05-searches:similar",
+   "sound": "click/kenney-ui-audio-switch4",
+   "files": [
+    "audio/kit\\click/kenney-ui-audio-switch4.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 47.2667,
+   "peak_s": 47.2667,
+   "pan": 0.3,
+   "gain_db": -31.01,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    47.2567,
+    47.3067
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "05-searches:news",
+   "sound": "click/kenney-ui-audio-switch4",
+   "files": [
+    "audio/kit\\click/kenney-ui-audio-switch4.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 50.2667,
+   "peak_s": 50.2667,
+   "pan": 0.3,
+   "gain_db": -29.42,
+   "limited_by": "best-band target",
+   "band_hz": [
+    4000,
+    8000
+   ],
+   "win_s": [
+    50.2567,
+    50.3067
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "06-verdict:verdict",
+   "sound": "thump/fs-389999-thump-cloth-1+tap/kenney-impact-impact-glass-light-002",
+   "files": [
+    "audio/kit\\thump/fs-389999-thump-cloth-1.wav",
+    "audio/kit\\tap/kenney-impact-impact-glass-light-002.wav"
+   ],
+   "weight": "hero",
+   "align": "peak",
+   "cue_s": 55.5,
+   "peak_s": 55.5,
+   "pan": -0.2,
+   "gain_db": -13.78,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    55.49,
+    55.6124
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "06-verdict:stats",
+   "sound": "tick/fs-130388-clock-ticking-1",
+   "files": [
+    "audio/kit\\tick/fs-130388-clock-ticking-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 57.1,
+   "peak_s": 57.1,
+   "pan": 0.3,
+   "gain_db": -27.91,
+   "limited_by": "best-band target",
+   "band_hz": [
+    8000,
+    16000
+   ],
+   "win_s": [
+    57.09,
+    57.1404
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "07-decides:dots-b",
+   "sound": "paper/fs-397550-page-turn-03-wav-2",
+   "files": [
+    "audio/kit\\paper/fs-397550-page-turn-03-wav-2.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 70.0,
+   "peak_s": 70.0,
+   "pan": 0.2,
+   "gain_db": -38.87,
+   "limited_by": "best-band target",
+   "band_hz": [
+    4000,
+    8000
+   ],
+   "win_s": [
+    69.99,
+    70.04
+   ],
+   "visual": "move"
+  },
+  {
+   "id": "07-decides:march",
+   "sound": "tick/fs-130388-clock-ticking-1",
+   "files": [
+    "audio/kit\\tick/fs-130388-clock-ticking-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 71.9333,
+   "peak_s": 71.9333,
+   "pan": -0.4,
+   "gain_db": -26.02,
+   "limited_by": "best-band target",
+   "band_hz": [
+    8000,
+    16000
+   ],
+   "win_s": [
+    71.9233,
+    71.9745
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "07-decides:reject",
+   "sound": "tap/kenney-impact-impact-glass-heavy-003",
+   "files": [
+    "audio/kit\\tap/kenney-impact-impact-glass-heavy-003.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 77.0333,
+   "peak_s": 77.0333,
+   "pan": -0.4,
+   "gain_db": -30.61,
+   "limited_by": "best-band target",
+   "band_hz": [
+    500,
+    1000
+   ],
+   "win_s": [
+    77.0233,
+    77.1297
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "07-decides:first-seen",
+   "sound": "thump/fs-389999-thump-cloth-1+tap/kenney-impact-impact-glass-light-002",
+   "files": [
+    "audio/kit\\thump/fs-389999-thump-cloth-1.wav",
+    "audio/kit\\tap/kenney-impact-impact-glass-light-002.wav"
+   ],
+   "weight": "hero",
+   "align": "peak",
+   "cue_s": 80.0667,
+   "peak_s": 80.0667,
+   "pan": 0.2,
+   "gain_db": -11.53,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    80.0567,
+    80.1533
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "08-lives:chip1",
+   "sound": "pop/fs-253956-bubble-pop-1",
+   "files": [
+    "audio/kit\\pop/fs-253956-bubble-pop-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 94.6,
+   "peak_s": 94.6,
+   "pan": 0.3,
+   "gain_db": -23.01,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    94.59,
+    94.6431
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "08-lives:chip2",
+   "sound": "pop/fs-253956-bubble-pop-1",
+   "files": [
+    "audio/kit\\pop/fs-253956-bubble-pop-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 97.1,
+   "peak_s": 97.1,
+   "pan": 0.35,
+   "gain_db": -22.82,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    97.09,
+    97.1439
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "08-lives:boom",
+   "sound": "click/kenney-ui-audio-switch4",
+   "files": [
+    "audio/kit\\click/kenney-ui-audio-switch4.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 99.1333,
+   "peak_s": 99.1333,
+   "pan": 0.3,
+   "gain_db": -31.16,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    99.1233,
+    99.1733
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "09-reply:news",
+   "sound": "click/kenney-ui-audio-switch4",
+   "files": [
+    "audio/kit\\click/kenney-ui-audio-switch4.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 102.6,
+   "peak_s": 102.6,
+   "pan": 0.3,
+   "gain_db": -28.0,
+   "limited_by": "best-band target",
+   "band_hz": [
+    4000,
+    8000
+   ],
+   "win_s": [
+    102.59,
+    102.64
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "09-reply:sheet",
+   "sound": "swish/fs-268226-woosh-2-mp3-1",
+   "files": [
+    "audio/kit\\swish/fs-268226-woosh-2-mp3-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 106.2,
+   "peak_s": 106.2,
+   "pan": -0.35,
+   "gain_db": -25.55,
+   "limited_by": "best-band target",
+   "band_hz": [
+    500,
+    1000
+   ],
+   "win_s": [
+    106.19,
+    106.3034
+   ],
+   "visual": "move"
+  },
+  {
+   "id": "09-reply:hindi",
+   "sound": "click/kenney-ui-audio-switch1",
+   "files": [
+    "audio/kit\\click/kenney-ui-audio-switch1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 108.3333,
+   "peak_s": 108.3333,
+   "pan": -0.35,
+   "gain_db": -27.25,
+   "limited_by": "best-band target",
+   "band_hz": [
+    4000,
+    8000
+   ],
+   "win_s": [
+    108.3233,
+    108.3733
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "10-everywhere:menu",
+   "sound": "click/kenney-ui-audio-switch33",
+   "files": [
+    "audio/kit\\click/kenney-ui-audio-switch33.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 118.7,
+   "peak_s": 118.7,
+   "pan": -0.4,
+   "gain_db": -23.44,
+   "limited_by": "best-band target",
+   "band_hz": [
+    4000,
+    8000
+   ],
+   "win_s": [
+    118.69,
+    118.74
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "10-everywhere:pick",
+   "sound": "click/kenney-ui-audio-switch1",
+   "files": [
+    "audio/kit\\click/kenney-ui-audio-switch1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 119.3,
+   "peak_s": 119.3,
+   "pan": -0.3,
+   "gain_db": -23.55,
+   "limited_by": "best-band target",
+   "band_hz": [
+    8000,
+    16000
+   ],
+   "win_s": [
+    119.29,
+    119.34
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "10-everywhere:video",
+   "sound": "swish/fs-268226-woosh-2-mp3-1",
+   "files": [
+    "audio/kit\\swish/fs-268226-woosh-2-mp3-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 122.2667,
+   "peak_s": 122.2667,
+   "pan": 0.4,
+   "gain_db": -21.55,
+   "limited_by": "best-band target",
+   "band_hz": [
+    4000,
+    8000
+   ],
+   "win_s": [
+    122.2567,
+    122.3705
+   ],
+   "visual": "move"
+  },
+  {
+   "id": "11-hood:row1",
+   "sound": "click/kenney-ui-audio-switch4",
+   "files": [
+    "audio/kit\\click/kenney-ui-audio-switch4.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 132.6,
+   "peak_s": 132.6,
+   "pan": 0.3,
+   "gain_db": -28.16,
+   "limited_by": "best-band target",
+   "band_hz": [
+    4000,
+    8000
+   ],
+   "win_s": [
+    132.59,
+    132.64
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "11-hood:row2",
+   "sound": "click/kenney-ui-audio-switch4",
+   "files": [
+    "audio/kit\\click/kenney-ui-audio-switch4.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 135.0333,
+   "peak_s": 135.0333,
+   "pan": 0.3,
+   "gain_db": -30.58,
+   "limited_by": "best-band target",
+   "band_hz": [
+    4000,
+    8000
+   ],
+   "win_s": [
+    135.0233,
+    135.0733
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "11-hood:row3",
+   "sound": "click/kenney-ui-audio-switch4",
+   "files": [
+    "audio/kit\\click/kenney-ui-audio-switch4.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 137.2333,
+   "peak_s": 137.2333,
+   "pan": 0.3,
+   "gain_db": -28.0,
+   "limited_by": "best-band target",
+   "band_hz": [
+    4000,
+    8000
+   ],
+   "win_s": [
+    137.2233,
+    137.2733
+   ],
+   "visual": "appear"
+  },
+  {
+   "id": "12-outro:logo",
+   "sound": "thump/fs-389999-thump-cloth-1+tap/kenney-impact-impact-glass-light-002",
+   "files": [
+    "audio/kit\\thump/fs-389999-thump-cloth-1.wav",
+    "audio/kit\\tap/kenney-impact-impact-glass-light-002.wav"
+   ],
+   "weight": "hero",
+   "align": "peak",
+   "cue_s": 142.6333,
+   "peak_s": 142.6333,
+   "pan": 0.0,
+   "gain_db": -12.03,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    142.6233,
+    142.7178
+   ],
+   "visual": "land"
+  }
+ ]
+}

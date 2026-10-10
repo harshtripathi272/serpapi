@@ -1,0 +1,14 @@
+{
+  "message": "pop/fs-253956-bubble-pop-1",
+  "chip": "pop/fs-253956-bubble-pop-1",
+  "tap": "click/kenney-ui-audio-switch1",
+  "card": "click/kenney-ui-audio-switch4",
+  "soft": "tap/kenney-impact-impact-glass-heavy-003",
+  "hero": "thump/fs-389999-thump-cloth-1+tap/kenney-impact-impact-glass-light-002",
+  "key": "key/fs-194797-vintage-keyboard-3-1",
+  "press": "click/kenney-ui-audio-switch33",
+  "tick": "tick/fs-130388-clock-ticking-1",
+  "swish": "swish/fs-268226-woosh-2-mp3-1",
+  "paper": "paper/fs-397550-page-turn-03-wav-2",
+  "slide": "swish/fs-268226-woosh-2-mp3-1"
+}
